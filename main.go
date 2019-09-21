@@ -23,15 +23,22 @@ type Post struct {
 }
 
 func main() {
-	// Initialising and connecting
+	// Initializing and connecting
 	// ========================================================================================
 
 	// create a new timeout context
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	fmt.Println("Attempting connection...")
+	fmt.Println("If you exit 1 with context deadline exceeded:")
+	fmt.Println("  * Make sure mongodb is running")
+	fmt.Println("  * Check your port number.")
+
 	// create a mongo client
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:6548/"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017/"))
+
+	// handle errors if connection fails
 	if err != nil {
 		log.Fatal(err)
 	}
